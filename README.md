@@ -1,0 +1,1 @@
+# Razer Synapse 3 Auto Updater
