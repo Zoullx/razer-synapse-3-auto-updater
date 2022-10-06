@@ -25,7 +25,7 @@ $remoteVersion = $matches.RemoteVersion
 $remoteFilename = [System.IO.Path]::GetFileName($downloadUrl)
 
 # Make sure web installer files folder exists
-if (-not Test-Path -Path '.\files\web-installer') {
+if (-not (Test-Path -Path '.\files\web-installer')) {
     New-Item -Path '.\files\web-installer' -ItemType Directory
 }
 
@@ -59,7 +59,7 @@ if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Versi
     Start-Process ".\files\web-installer\$remoteFilename" -Wait
 
     # Make sure components files folder exists
-    if (-not Test-Path -Path '.\files\components') {
+    if (-not (Test-Path -Path '.\files\components')) {
         New-Item -Path '.\files\components' -ItemType Directory
     }
 
@@ -91,7 +91,7 @@ if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Versi
     }
 
     # Make sure chocolatey packages repo is cloned
-    if (-not Test-Path -Path '.\chocolatey-packages') {
+    if (-not (Test-Path -Path '.\chocolatey-packages')) {
         git clone https://github.com/Zoullx/chocolatey-packages.git
     }
 
