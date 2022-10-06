@@ -1,8 +1,8 @@
 # $ErrorActionPreference = 'Stop'
-$CWD = [Environment]::CurrentDirectory
+# $CWD = [Environment]::CurrentDirectory
 
 Push-Location $PSScriptRoot
-[Environment]::CurrentDirectory = $PSScriptRoot
+# [Environment]::CurrentDirectory = $PSScriptRoot
 
 try {
     $razerSynapseUrl = 'http://rzr.to/synapse-3-pc-download'
@@ -140,9 +140,8 @@ try {
     }
 } catch {
     Add-Content -Path '.\update.log' -Value "[$(Get-Date)] $PSItem"
+    Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
 }
 
 Pop-Location
-[Environment]::CurrentDirectory = $CWD
-
-Exit
+# [Environment]::CurrentDirectory = $CWD
