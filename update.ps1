@@ -3,7 +3,8 @@ $ErrorActionPreference = 'Stop'
 try {
     $razerSynapseUrl = 'http://rzr.to/synapse-3-pc-download'
 
-    Set-Location 'C:\razer-synapse-3-auto-updater'
+    $baseScriptLocation = 'C:\razer-synapse-3-auto-updater'
+    Set-Location $baseScriptLocation
 
     Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Checking for update"
 
@@ -99,9 +100,9 @@ try {
         }
 
         # Update chocolatey-packages repo
-        Push-Location '.\chocolatey-packages'
+        Set-Location "$baseScriptLocation\chocolatey-packages"
         git pull
-        Pop-Location
+        Set-Location $baseScriptLocation
 
         # Replace urls and checksums in chocolatey install script
         $chocolateyInstallScriptFilename = '.\chocolatey-packages\razer-synapse-3\tools\chocolateyInstall.ps1'
@@ -124,11 +125,11 @@ try {
         [System.IO.File]::WriteAllText($nuspecFile, $nuspec.InnerXml, $utf8NoBomEncoding)
 
         # Commit update to chocolatey-packages repo
-        Push-Location '.\chocolatey-packages'
+        Set-Location "$baseScriptLocation\chocolatey-packages"
         git add .
         git commit -m "Update Razer Synapse 3 chocolatey package to version $remoteVersion (auto)"
         git push
-        Pop-Location
+        Set-Location $baseScriptLocation
 
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Finished updating to version $remoteVersion"
         Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
