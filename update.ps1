@@ -135,3 +135,5 @@ if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Versi
     Add-Content -Path '.\update.log' -Value "[$(Get-Date)] No update found"
     Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
 }
+
+Exit
