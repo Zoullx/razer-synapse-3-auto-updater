@@ -2,6 +2,8 @@ $ErrorActionPreference = 'Stop'
 
 $razerSynapseUrl = 'http://rzr.to/synapse-3-pc-download'
 
+Set-Location 'C:\razer-synapse-3-auto-updater'
+
 Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Checking for update"
 
 # Start capture of remote version
