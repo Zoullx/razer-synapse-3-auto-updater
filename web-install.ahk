@@ -35,7 +35,7 @@ If WinExist(winTitle)
 ; Installation
 ; Wait for it to finish
 WinWait, %winTitle%,, 15
-Sleep, 230000
+Sleep, 240000
 
 ; Congratulations, Get Started screen
 WinWait, %winTitle%,, 15
