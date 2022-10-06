@@ -24,6 +24,11 @@ if (-not ($downloadUrl -match '.*_V(?<RemoteVersion>.*)\.exe')) {
 $remoteVersion = $matches.RemoteVersion
 $remoteFilename = [System.IO.Path]::GetFileName($downloadUrl)
 
+# Make sure web installer files folder exists
+if (Test-Path -Path '.\files\web-installer') {
+    New-Item -Path '.\files\web-installer' -ItemType Directory
+}
+
 # Start capture of local version
 $localVersion = $null
 if (Test-Path -Path '.\files\web-installer\*.exe') {
@@ -52,6 +57,11 @@ if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Versi
 
     Start-Process 'AutoHotKey' 'web-install.ahk'
     Start-Process ".\files\web-installer\$remoteFilename" -Wait
+
+    # Make sure components files folder exists
+    if (Test-Path -Path '.\files\components') {
+        New-Item -Path '.\files\components' -ItemType Directory
+    }
 
     Remove-Item -Path '.\files/components\*'
 
