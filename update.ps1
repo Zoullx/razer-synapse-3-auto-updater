@@ -83,17 +83,22 @@ if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Versi
         }
     }
 
-    # Update chocolatey-packages repo
-    Push-Location '.\chocolatey-packages'
-    git pull
-    Pop-Location
-
     # Prep urls and checksums to be replaced in chocolatey install script
     $componentReplaceValues = @{}
     foreach ($component in $components) {
         $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Url\s*=\s*)'.*'"      = "`${1}'$($component.Link)'"}
         $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Checksum\s*=\s*)'.*'" = "`${1}'$($component.Hash)'"}
     }
+
+    # Make sure chocolatey packages repo is cloned
+    if (Test-Path -Path '.\chocolatey-packages') {
+        git clone https://github.com/Zoullx/chocolatey-packages.git
+    }
+
+    # Update chocolatey-packages repo
+    Push-Location '.\chocolatey-packages'
+    git pull
+    Pop-Location
 
     # Replace urls and checksums in chocolatey install script
     $chocolateyInstallScriptFilename = '.\chocolatey-packages\razer-synapse-3\tools\chocolateyInstall.ps1'
