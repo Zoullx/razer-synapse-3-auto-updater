@@ -11,7 +11,10 @@ winTitle = ahk_exe RazerInstaller.exe
 ; Splash screen
 ; Wait for it to go away
 WinWait, %winTitle%,, 120
-Sleep, 25000
+If WinExist(winTitle)
+{
+    Sleep, 25000
+}
 
 ; Select software to install
 ; Only Razer Synapse by default
@@ -35,7 +38,10 @@ If WinExist(winTitle)
 ; Installation
 ; Wait for it to finish
 WinWait, %winTitle%,, 15
-Sleep, 240000
+If WinExist(winTitle)
+{
+    Sleep, 260000
+}
 
 ; Congratulations, Get Started screen
 WinWait, %winTitle%,, 15
