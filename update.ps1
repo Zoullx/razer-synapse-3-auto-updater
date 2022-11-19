@@ -60,8 +60,10 @@ try {
         # Remove previous components and files if any exist
         Remove-Item -Path 'C:\Windows\Installer\Razer\Installer\*' -Recurse -Force
 
-        $script = Start-Process 'AutoHotKey' 'web-install.ahk' -PassThru -Wait
+        $script = Start-Process 'AutoHotKey' 'web-install.ahk' -PassThru
         Start-Process ".\files\web-installer\$remoteFilename" -Wait
+
+        $script.WaitForExit()
 
         if ($script.ExitCode -eq 0) {
             Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_$localVersion"
