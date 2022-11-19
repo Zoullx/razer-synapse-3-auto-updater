@@ -64,8 +64,9 @@ try {
         Start-Process ".\files\web-installer\$remoteFilename" -Wait
 
         $script.WaitForExit()
+        Add-Content -Path '.\update.log' -Value "[$(Get-Date)] AHK Script ExitCode $($script.ExitCode)"
 
-        if ($script.ExitCode -eq 0) {
+        if ($script.HasExited -and $script.GetType().GetField('exitCode', 'NonPublic, Instance').GetValue($script) -eq 0) {
             Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_$localVersion"
         } else {
             Remove-Item -Path ".\files\web-installer\$remoteFilename"
