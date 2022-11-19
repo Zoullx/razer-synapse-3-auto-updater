@@ -53,6 +53,16 @@ If WinExist(winTitle)
     Send {Space} ; Stop Razer Synapse from starting on finish
     Send {Tab}
     Send {Enter} ; Get Started
+    Sleep, 4000
 }
 
-Exit
+; Check to see if Razer Synapse installer window still exists
+WinWait, %winTitle%,, 15
+If WinExist(winTitle)
+{
+    ; If it does, something went wrong, exit with a non 0 code to use in Powershell script
+    WinClose
+    ExitApp 1
+}
+
+ExitApp 0
