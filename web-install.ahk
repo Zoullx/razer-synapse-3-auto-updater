@@ -13,7 +13,7 @@ winTitle = ahk_exe RazerInstaller.exe
 WinWait, %winTitle%,, 120
 If WinExist(winTitle)
 {
-    Sleep, 25000
+    Sleep, 30000
 }
 
 ; Select software to install
