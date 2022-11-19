@@ -58,7 +58,7 @@ try {
         Move-Item -Path $remoteFilename -Destination '.\files\web-installer'
 
         # Remove previous components and files if any exist
-        Remove-Item -Path 'C:\Windows\Installer\Razer\Installer\*'
+        Remove-Item -Path 'C:\Windows\Installer\Razer\Installer\*' -Recurse -Force
 
         $script = Start-Process 'AutoHotKey' 'web-install.ahk' -PassThru -Wait
         Start-Process ".\files\web-installer\$remoteFilename" -Wait
