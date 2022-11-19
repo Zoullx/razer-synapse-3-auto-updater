@@ -49,8 +49,6 @@ try {
         # Update found
         if ($localVersion -ne $null) {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating from version $localVersion to version $remoteVersion"
-
-            Remove-Item -Path '.\files\web-installer\*'
         } else {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating to initial version $remoteVersion"
         }
@@ -59,8 +57,22 @@ try {
         Invoke-WebRequest -Uri $downloadUrl -Outfile $remoteFilename -UseBasicParsing
         Move-Item -Path $remoteFilename -Destination '.\files\web-installer'
 
-        Start-Process 'AutoHotKey' 'web-install.ahk'
+        # Remove previous components and files if any exist
+        Remove-Item -Path 'C:\Windows\Installer\Razer\Installer\*'
+
+        $script = Start-Process 'AutoHotKey' 'web-install.ahk' -PassThru -Wait
         Start-Process ".\files\web-installer\$remoteFilename" -Wait
+
+        if ($script.ExitCode -eq 0) {
+            Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_$localVersion"
+        } else {
+            Remove-Item -Path ".\files\web-installer\$remoteFilename"
+            
+            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
+            Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
+
+            Exit 1
+        }
 
         # Make sure components files folder exists
         if (-not (Test-Path -Path '.\files\components')) {
