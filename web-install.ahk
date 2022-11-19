@@ -62,7 +62,7 @@ If WinExist(winTitle)
 {
     ; If it does, something went wrong, exit with a non 0 code to use in Powershell script
     WinClose
-    ExitApp 1
+    ExitApp, 1
 }
 
-ExitApp 0
+ExitApp, 0
