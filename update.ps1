@@ -36,7 +36,7 @@ try {
     # Start capture of local version
     $localVersion = $null
     if (Test-Path -Path '.\files\web-installer\*.exe') {
-        $localFileInfo = Get-ItemProperty -Path '.\files\web-installer\*'
+        $localFileInfo = Get-ItemProperty -Path '.\files\web-installer\*.exe'
         if (-not ($localFileInfo.Name -match '.*_V(?<LocalVersion>.*)\.exe')) {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Could not determine version from local file $($localFileInfo.Name)"
             return
@@ -68,7 +68,7 @@ try {
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] AHK Script ExitCode $($script.ExitCode)"
 
         if ($script.ExitCode -eq 0) {
-            Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_$localVersion"
+            Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
         } else {
             Remove-Item -Path ".\files\web-installer\$remoteFilename"
             
@@ -83,7 +83,7 @@ try {
             New-Item -Path '.\files\components' -ItemType Directory
         }
 
-        Remove-Item -Path '.\files/components\*'
+        Remove-Item -Path '.\files\components\*'
 
         Copy-Item -Path 'C:\Windows\Installer\Razer\Installer\*_*.exe' -Destination '.\files\components' -Recurse
 
