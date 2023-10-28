@@ -1,6 +1,9 @@
 ﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #NoTrayIcon
 #Warn ; Enable warnings to assist with detecting common errors.
+
+#include <FindText>
+
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 SetTitleMatchMode, 1 ; A windows's title must start with the specified WinTitle to be a match.
 SetControlDelay 0
