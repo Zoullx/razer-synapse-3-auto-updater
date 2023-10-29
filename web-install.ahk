@@ -31,7 +31,7 @@ winH = 0
 ; Only Razer Synapse by default
 If (FindText("wait", -1,,,,,,, installText)) {
     WinGetPos, winX, winY, winW, winH, winTitle
-    Sleep, 2000
+    Sleep, 5000
     Send {Enter} ; Install
 }
 
@@ -39,7 +39,7 @@ skipText:="|<>*160$49.k3tz7703k0wz3XU0EyCT3lly0z7D3sszUTnb3wQTkDznXyCDsVztXz77wE
 
 ; Razer Cortex promotion
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, skipText)) {
-    Sleep, 2000
+    Sleep, 5000
     Send {Esc} ; Skip and Continue
 }
 
@@ -47,20 +47,20 @@ cancelText:="|<>*161$89.w1zszlzXw1y037zU1zlzVz7k1w06Dy7lz1z1yD7ltzwTwTXy3y3wQTln
 
 ; Installation
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, cancelText)) {
-    Sleep, 2000
+    Sleep, 5000
 }
 
 getStartedText:="|<>*100$154.3y1zwzzU1z3zy1k3zVzzDzXz0Azw7znzy0DyDzs70DzbzwzyDz0nUsQ00Q01kQ1k0S0s60s3U0kC3Q1Vk01k060k703M3UQ3UC030MBU7700700s30Q0BUC0kC0s0A0kq00Q00Q01U01k1r0s30s3U0k33s01k01k0700706A3UQ3UC030ADU07zU700DU0Q0MkC1UC0zwA0sy3sTy0Q00Dk1k31Uzy0s3zkk3XsTlk01k00DU70A63zU3UC030CDU7700700070Q1kQC60C0s0A0kq0QQ00Q000A1k7zksQ0s3U0k33M1lk01k0A0k70Tz3Uk3UC030Q1k7700700s30Q3UCC3UC0s0A1U3UQQ00Q01UQ1kA0Ms60s3U0kC07zVzw1k07zU70k1nUQ3UDzXzkADw7zk7007w0Q703C0sC0zyDw0s"
 
 ; Congratulations, Get Started screen
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, getStartedText)) {
-    Sleep, 2000
+    Sleep, 5000
     Send {Tab}
     Send {Tab}
     Send {Space} ; Stop Razer Synapse from starting on finish
     Send {Tab}
     Send {Enter} ; Get Started
-    Sleep, 4000 ; Give enough time for window to fully close if everything is progressing properly before checking if the window it still open
+    Sleep, 5000 ; Give enough time for window to fully close if everything is progressing properly before checking if the window it still open
 }
 
 ; Check to see if Razer Synapse installer window still exists
