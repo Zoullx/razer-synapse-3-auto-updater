@@ -1,4 +1,4 @@
-﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿; #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 #NoTrayIcon
 #Warn ; Enable warnings to assist with detecting common errors.
 
@@ -21,7 +21,7 @@ If WinExist(winTitle) {
     WinActivate
 }
 
-installText:="|<>*98$90.sM0kDsTzkC0M0A0sQ0kTwTzkC0M0A0sS0kkC0k0S0M0A0sS0lk60k0P0M0A0sT0lk60k0P0M0A0sPUkk00k0nUM0A0sNUks00k0lUM0A0sNkkT00k0lUM0A0sMskDs0k1UkM0A0sMMk1w0k1UkM0A0sMQk0C0k3UkM0A0sMCk060k3zsM0A0sM7lU60k3zsM0A0sM7lk60k70QM0A0sM3kkC0k60AM0A0sM1kzw0kC0ATyDzsM1kDs0kA0CTyDzU"
+installText:="|<>*112$46.G0ATV213APByA8AAtgFUsUknak66W33/NkMG8AAbUlVAUkmCV6Dm338v4MVcAAVblW6yzU"
 winX = 0
 winY = 0
 winW = 0
@@ -35,7 +35,7 @@ If (FindText("wait", -1,,,,,,, installText)) {
     Send {Enter} ; Install
 }
 
-skipText:="|<>*160$49.k3tz7703k0wz3XU0EyCT3lly0z7D3sszUTnb3wQTkDznXyCDsVztXz77wE7w3zXXyC0y0zlk0DkD0Dss0Dz3X3wQ0zzlnlyCDzDwtwT77zXyQy7XXzkyCTVllzw0DDssszz0DbyAQTz"
+skipText:="|<>*148$25.lnVVk9YU3YaHYy79m73YlsVm1CGNDb9YbsAsHw"
 
 ; Razer Cortex promotion
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, skipText)) {
@@ -43,14 +43,14 @@ If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, skipText)) {
     Send {Esc} ; Skip and Continue
 }
 
-cancelText:="|<>*161$89.w1zszlzXw1y037zU1zlzVz7k1w06Dy7lz1z1yD7ltzwTwTXy3y3wQTlnzsztzXwbw3sszXbzlzXzDl7s7lnzbDzXz7zzbDl7XbzyTz7yDzyCDX76Dzw0CDwTzwQT6CATzs0QTszztwyCAMzzlzszlzzU0wS8tzzbzlzXzD01sw1lzbDzXzbyA01lw3XyCTz7z7sszXXw77wQzyDz7lnzb7sD7ltzwTy077z6DsT07k0M0D0SDyATsz0TU0k0E"
+cancelText:="|<>*152$45.kySxss5w3nXY31jbQQQb9xtzVVZzDjDtAYjsBtzAaZzDjj84kb9xwmQb4vDjkHkskM44"
 
 ; Installation
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, cancelText)) {
     Sleep, 5000
 }
 
-getStartedText:="|<>*100$154.3y1zwzzU1z3zy1k3zVzzDzXz0Azw7znzy0DyDzs70DzbzwzyDz0nUsQ00Q01kQ1k0S0s60s3U0kC3Q1Vk01k060k703M3UQ3UC030MBU7700700s30Q0BUC0kC0s0A0kq00Q00Q01U01k1r0s30s3U0k33s01k01k0700706A3UQ3UC030ADU07zU700DU0Q0MkC1UC0zwA0sy3sTy0Q00Dk1k31Uzy0s3zkk3XsTlk01k00DU70A63zU3UC030CDU7700700070Q1kQC60C0s0A0kq0QQ00Q000A1k7zksQ0s3U0k33M1lk01k0A0k70Tz3Uk3UC030Q1k7700700s30Q3UCC3UC0s0A1U3UQQ00Q01UQ1kA0Ms60s3U0kC07zVzw1k07zU70k1nUQ3UDzXzkADw7zk7007w0Q703C0sC0zyDw0s"
+getStartedText:="|<>*106$77.C7rs6DkVtzTC2q830H633QskP76E21W4748V0XC0U4308+8F212M1w83UEYPW7m4lm0E0kVAy4849kY0U0V7t48E8GV810l28OAEUFUwT20w4EI8VywA"
 
 ; Congratulations, Get Started screen
 If (FindText("wait", -1, winX, winY, winX+winW, winY+winH,,, getStartedText)) {
