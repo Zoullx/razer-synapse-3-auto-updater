@@ -11,7 +11,8 @@ try {
     # Start capture of remote version
     $response = try {
         Invoke-WebRequest -Uri $razerSynapseUrl -UseBasicParsing
-    } catch {
+    }
+    catch {
         $_.Exception.Response
     }
 
@@ -45,11 +46,12 @@ try {
     }
 
     # Check remote version against local version
-    if ($localVersion -eq $null -or [System.Version]$remoteVersion -gt [System.Version]$localVersion) {
+    if ($null -eq $localVersion -or [System.Version]$remoteVersion -gt [System.Version]$localVersion) {
         # Update found
-        if ($localVersion -ne $null) {
+        if ($null -eq $localVersion) {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating from version $localVersion to version $remoteVersion"
-        } else {
+        }
+        else {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating to initial version $remoteVersion"
         }
 
@@ -69,7 +71,8 @@ try {
 
         if ($script.ExitCode -eq 0) {
             Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
-        } else {
+        }
+        else {
             Remove-Item -Path ".\files\web-installer\$remoteFilename"
             
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
@@ -94,7 +97,7 @@ try {
             if (-not ($componentInfo.Name -match ".*(?<ComponentName>Razer\S*|GMS\S*Setup)_.*")) {
                 Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Could not determine component name from $($componentInfo.Name)"
             }
-            $componentName = $matches.ComponentName.replace('_','')
+            $componentName = $matches.ComponentName.replace('_', '')
 
             $components += @{
                 Name = $componentName;
@@ -106,8 +109,8 @@ try {
         # Prep urls and checksums to be replaced in chocolatey install script
         $componentReplaceValues = @{}
         foreach ($component in $components) {
-            $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Url\s*=\s*)'.*'"      = "`${1}'$($component.Link)'"}
-            $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Checksum\s*=\s*)'.*'" = "`${1}'$($component.Hash)'"}
+            $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Url\s*=\s*)'.*'" = "`${1}'$($component.Link)'" }
+            $componentReplaceValues += @{"(?i)(^[$]$($component.Name)Checksum\s*=\s*)'.*'" = "`${1}'$($component.Hash)'" }
         }
 
         # Make sure chocolatey packages repo is cloned
@@ -149,11 +152,13 @@ try {
 
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Finished updating to version $remoteVersion"
         Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
-    } else {
+    }
+    else {
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] No update found"
         Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
     }
-} catch {
+}
+catch {
     Add-Content -Path '.\update.log' -Value "[$(Get-Date)] $PSItem"
     Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
 }
