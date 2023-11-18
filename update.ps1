@@ -69,7 +69,7 @@ try {
         $script.WaitForExit()
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] AHK Script ExitCode $($script.ExitCode)"
 
-        if ($script.ExitCode -eq 0) {
+        if ($script.ExitCode -eq 0 -and (-not ([string]::IsNullOrEmpty($localVersion)))) {
             Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
         }
         else {
