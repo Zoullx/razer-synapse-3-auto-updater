@@ -72,7 +72,7 @@ try {
         if ($script.ExitCode -eq 0 -and (-not ([string]::IsNullOrEmpty($localVersion)))) {
             Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
         }
-        else if ($script.ExitCode -ne 0) {
+        elseif ($script.ExitCode -ne 0) {
             Remove-Item -Path ".\files\web-installer\$remoteFilename"
             
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
