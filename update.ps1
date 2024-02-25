@@ -56,8 +56,7 @@ try {
         }
 
         # Start install of web installer to get components
-        Invoke-WebRequest -Uri $downloadUrl -Outfile $remoteFilename -UseBasicParsing
-        Move-Item -Path $remoteFilename -Destination '.\files\web-installer'
+        Invoke-WebRequest -Uri $downloadUrl -Outfile ".\files\web-installer\$remoteFilename" -UseBasicParsing
 
         # Remove previous components and files if any exist
         Remove-Item -Path 'C:\Windows\Installer\Razer\Installer\*' -Recurse -Force
