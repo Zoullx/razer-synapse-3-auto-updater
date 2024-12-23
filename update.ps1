@@ -69,10 +69,10 @@ try {
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] AHK Script ExitCode $($script.ExitCode)"
 
         if ($script.ExitCode -eq 0) {
-            Remove-Item -Path ".\files\web-installer\*" -Exclude ".\files\web-installer\RazerSynapseInstaller_V$remoteVersion.exe"
+            Remove-Item -Path ".\files\web-installer\*" -Exclude "RazerSynapseInstaller_V$remoteVersion.exe"
         }
         elseif ($script.ExitCode -ne 0 -and (-not ([string]::IsNullOrEmpty($localVersion)))) {
-            Remove-Item -Path ".\files\web-installer\*" -Exclude ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
+            Remove-Item -Path ".\files\web-installer\*" -Exclude "RazerSynapseInstaller_V$localVersion.exe"
             
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
             Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
