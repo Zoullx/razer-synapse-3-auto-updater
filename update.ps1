@@ -49,10 +49,10 @@ try {
     if ($null -eq $localVersion -or [System.Version]$remoteVersion -gt [System.Version]$localVersion) {
         # Update found
         if ($null -eq $localVersion) {
-            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating from version $localVersion to version $remoteVersion"
+            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating to initial version $remoteVersion"
         }
         else {
-            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating to initial version $remoteVersion"
+            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Updating from version $localVersion to version $remoteVersion"
         }
 
         # Start install of web installer to get components
@@ -68,11 +68,19 @@ try {
         $script.WaitForExit()
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] AHK Script ExitCode $($script.ExitCode)"
 
-        if ($script.ExitCode -eq 0 -and (-not ([string]::IsNullOrEmpty($localVersion)))) {
-            Remove-Item -Path ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
+        if ($script.ExitCode -eq 0) {
+            Remove-Item -Path ".\files\web-installer\*" -Exclude ".\files\web-installer\RazerSynapseInstaller_V$remoteVersion.exe"
         }
-        elseif ($script.ExitCode -ne 0) {
-            Remove-Item -Path ".\files\web-installer\$remoteFilename"
+        elseif ($script.ExitCode -ne 0 -and (-not ([string]::IsNullOrEmpty($localVersion)))) {
+            Remove-Item -Path ".\files\web-installer\*" -Exclude ".\files\web-installer\RazerSynapseInstaller_V$localVersion.exe"
+            
+            Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
+            Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
+
+            Exit 1
+        }
+        elseif ($script.ExitCode -ne 0 -and ([string]::IsNullOrEmpty($localVersion))) {
+            Remove-Item -Path ".\files\web-installer\*"
             
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Something went wrong, exiting with error"
             Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
@@ -150,6 +158,12 @@ try {
         Pop-Location
 
         Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Finished updating to version $remoteVersion"
+        Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
+    }
+    elseif ([System.Version]$remoteVersion -eq [System.Version]$localVersion -and (Get-Item -Path ".\files\web-installer\*" | Measure-Object).Count -gt 1) {
+        Remove-Item -Path ".\files\web-installer\*" -Exclude (Get-Item -Path ".\files\web-installer\*.exe" | Sort-Object -Property Name | Select-Object -Last 1).Name
+        
+        Add-Content -Path '.\update.log' -Value "[$(Get-Date)] No update found"
         Add-Content -Path '.\update.log' -Value "--------------------------------------------------------------------------------"
     }
     else {
