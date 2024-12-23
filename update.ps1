@@ -37,7 +37,7 @@ try {
     # Start capture of local version
     $localVersion = $null
     if (Test-Path -Path '.\files\web-installer\*.exe') {
-        $localFileInfo = Get-ItemProperty -Path '.\files\web-installer\*.exe'
+        $localFileInfo = Get-ItemProperty -Path '.\files\web-installer\*.exe' | Sort-Object -Property Name | Select-Object -Last 1
         if (-not ($localFileInfo.Name -match '.*_V(?<LocalVersion>.*)\.exe')) {
             Add-Content -Path '.\update.log' -Value "[$(Get-Date)] Could not determine version from local file $($localFileInfo.Name)"
             return
